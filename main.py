@@ -1,9 +1,9 @@
 ﻿import PyPDF2
 import os
 import nltk
+import argparse
 from preprocess_recipes import preprocess_cookbook
 
-# Download necessary NLTK data
 def download_nltk_data():
     try:
         nltk.data.find('tokenizers/punkt')
@@ -32,8 +32,9 @@ def process_pdf(pdf_path, output_file):
         print(f"Error processing {os.path.basename(pdf_path)}: {str(e)}")
 
 if __name__ == "__main__":
-    # Ensure NLTK data is downloaded
-    download_nltk_data()
+    parser = argparse.ArgumentParser(description="Extract text from PDF and optionally preprocess it.")
+    parser.add_argument("-p", "--preprocess", action="store_true", help="Preprocess the extracted text")
+    args = parser.parse_args()
 
     pdf_path = "books/cookingbythebook.pdf"
     extracted_text_file = "books/extracted_text.txt"
@@ -41,8 +42,12 @@ if __name__ == "__main__":
     
     # Extract text from PDF
     process_pdf(pdf_path, extracted_text_file)
-    
-    # Preprocess the extracted text
-    preprocess_cookbook(extracted_text_file, processed_recipes_file)
-    
-    print(f"Text extraction and preprocessing complete. Processed recipes saved to {processed_recipes_file}")
+    print(f"Text extraction complete. Extracted text saved to {extracted_text_file}")
+
+    if args.preprocess:
+        # Ensure NLTK data is downloaded
+        download_nltk_data()
+        
+        # Preprocess the extracted text
+        preprocess_cookbook(extracted_text_file, processed_recipes_file)
+        print(f"Preprocessing complete. Processed recipes saved to {processed_recipes_file}")

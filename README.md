@@ -38,13 +38,17 @@ This Python project extracts text from PDF files using the PyPDF2 library and pr
 
 1. Place your PDF file in the `books` directory (or modify the `pdf_path` in the script).
 
-2. Run the main script:
+2. To extract text from the PDF without preprocessing:
    ```
    python main.py
    ```
+   The extracted raw text will be saved in `books/extracted_text.txt`.
 
-3. The extracted raw text will be saved in `books/extracted_text.txt`.
-4. The processed recipe text will be saved in `books/processed_recipes.txt`.
+3. To extract text from the PDF and preprocess it:
+   ```
+   python main.py -p
+   ```
+   The extracted raw text will be saved in `books/extracted_text.txt`, and the processed recipe text will be saved in `books/processed_recipes.txt`.
 
 ## Example
 
